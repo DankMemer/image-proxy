@@ -1,10 +1,14 @@
 const cluster = require('cluster');
-const os = require('os');
+const cpus = require('os').cpus().length;
+
+if (cpus === 1) {
+  return require('./worker.js');
+}
 
 if (cluster.isMaster) {
   console.log('Master', process.pid, 'launching workers');
 
-  for (let i = 0; i <= os.cpus().length; i++) {
+  for (let i = 0; i < cpus; i++) {
   	cluster.fork();
   }
 
