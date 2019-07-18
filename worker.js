@@ -1,8 +1,19 @@
 const { createServer } = require('http');
 const { get } = require('https');
+const config = require('./config.json');
 
 createServer()
   .on('request', (req, res) => {
+    if (req.headers.authorization !== config.authKey) {
+      res.writeHead(401, {
+        'Content-Type': 'application/json'
+      });
+      res.end(JSON.stringify({
+        status: 401,
+        error: 'Authorization mismatch'
+      }));
+    }
+
     let url;
     let urlRaw = req.url.slice(6);
     if (decodeURIComponent(urlRaw) !== urlRaw) {
