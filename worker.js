@@ -13,6 +13,7 @@ createServer()
         status: 401,
         error: 'Authorization mismatch'
       }));
+      return;
     }
 
     let url;
