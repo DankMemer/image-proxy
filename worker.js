@@ -1,5 +1,6 @@
 const { createServer } = require('http');
-const { get } = require('https');
+const https = require('https');
+const http = require('http');
 const config = require('./config.json');
 
 createServer()
@@ -32,7 +33,7 @@ createServer()
       }));
     }
 
-    get(url, (incomingRes) => {
+    (url.protocol === 'https:' ? https : http).get(url, (incomingRes) => {
       if (incomingRes.headers['content-length']) {
         res.setHeader('Content-Length', incomingRes.headers['content-length']);
       }
