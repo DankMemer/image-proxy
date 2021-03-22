@@ -31,6 +31,7 @@ createServer()
         status: 400,
         error: urlRaw ? 'invalid URL' : 'No image URL provided'
       }));
+      return;
     }
 
     (url.protocol === 'https:' ? https : http).get(url, (incomingRes) => {
